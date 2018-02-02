@@ -1,14 +1,15 @@
 package main
 
 import (
-	"github.com/smbody/common-server/application"
-	"github.com/smbody/common-server/services"
+	"github.com/smbody/common-server/app"
+	"github.com/smbody/common-server/dts"
 )
 
 func main() {
-	Application := application.Init(application.Routes{
-		"/calculate": services.Calculate ,
-		"/graphql": application.NewGraphqQL(services.GraphQLSchema),
+	app.App = app.Init(app.Routes{
+		"/hello": app.Get(dts.HelloWorld),
+		"/user": app.Post(dts.Hello),
+		"/ping": app.Any(dts.Ping),
 		})
-	Application.Run()
+	app.Run()
 }
