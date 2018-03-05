@@ -1,22 +1,21 @@
 package dts
 
 import (
-	"github.com/smbody/common-server/bl/greetings"
 	"io"
+	"github.com/smbody/common-server/container"
 )
 
-var bl = greetings.New()
 
 func Hello(r io.Reader) (result []byte) {
 	man := ToUser(r)
-	hello := bl.SayHello(man)
+	hello := container.Greetings().SayHello(man)
 	return Write(hello)
 }
 
 func HelloWorld(r io.Reader) ([]byte) {
-	return Write(bl.SayHelloWorld())
+	return Write(container.Greetings().SayHelloWorld())
 }
 
 func Ping(r io.Reader) (result []byte) {
-	return Write(bl.Ping())
+	return Write(container.Greetings().Ping())
 }

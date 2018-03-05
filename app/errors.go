@@ -16,9 +16,9 @@ type serverError struct {
 var predefinedErrors map[ErrorCode]*serverError
 
 const (
-	UnknownError      ErrorCode = 1
-	CantDecodeJson              = 2
-	CantMarshalObject           = 3
+	UnknownError      ErrorCode = 101
+	CantDecodeJson              = 102
+	CantMarshalObject           = 103
 )
 
 func init() {
@@ -32,8 +32,12 @@ func PredefineError(errCode ErrorCode, status int, errText string) {
 	predefinedErrors[errCode] = &serverError{errCode, status, errText}
 }
 
+func GetError(errCode ErrorCode) *serverError{
+	return predefinedErrors[errCode]
+}
+
 func ThrowError(errCode ErrorCode) {
-	panic(predefinedErrors[errCode])
+	panic(GetError(errCode))
 }
 
 func (e *serverError) Error() string {

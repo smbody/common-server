@@ -8,3 +8,8 @@ type User struct {
 func New() *User {
 	return &User{"", ""}
 }
+
+
+func(u *User) FullName() string {
+	return u.Name
+}
