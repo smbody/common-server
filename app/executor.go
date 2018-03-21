@@ -8,7 +8,7 @@ import (
 func (app *application) executor() http.Handler {
 	fn := func(w http.ResponseWriter, req *http.Request) {
 		defer errorHandling(w)
-		route := app.routes[req.URL.String()]
+		route := app.routes[req.URL.Path]
 		result := route.executor(req.Body)
 		w.Header().Set("Content-Type", "app/json")
 		w.Write(result)

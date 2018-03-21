@@ -1,10 +1,9 @@
 package dts
 
 import (
-	"io"
 	"github.com/smbody/common-server/container"
+	"io"
 )
-
 
 func Hello(r io.Reader) (result []byte) {
 	man := ToUser(r)
@@ -12,7 +11,7 @@ func Hello(r io.Reader) (result []byte) {
 	return Write(hello)
 }
 
-func HelloWorld(r io.Reader) ([]byte) {
+func HelloWorld(r io.Reader) []byte {
 	return Write(container.Greetings().SayHelloWorld())
 }
 

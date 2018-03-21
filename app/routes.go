@@ -1,18 +1,18 @@
 package app
 
 import (
-	"net/http"
 	"io"
+	"net/http"
 )
 
-type dtsMethod func(reader io.Reader) ([]byte)
+type dtsMethod func(reader io.Reader) []byte
 
 type route struct {
 	httpMethod string
 	executor   dtsMethod
 }
 
-type Routes map[string] *route
+type Routes map[string]*route
 
 func Post(executor dtsMethod) *route {
 	return &route{http.MethodPost, executor}
@@ -23,10 +23,12 @@ func Get(executor dtsMethod) *route {
 }
 
 func Any(executor dtsMethod) *route {
-	return &route{executor:executor}
+	return &route{executor: executor}
 }
 
 func (r *route) MethodAllowed(method string) bool {
-	if r.httpMethod == "" || r.httpMethod == method {return true}
+	if r.httpMethod == "" || r.httpMethod == method {
+		return true
+	}
 	return false
 }

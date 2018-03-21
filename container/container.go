@@ -1,13 +1,14 @@
 package container
 
-import "github.com/smbody/common-server/bl"
+import (
+	"github.com/smbody/common-server/bl"
+)
 
 var (
 	factory Factory
 
 	greetingsBl bl.Greetings
 )
-
 
 func instance() Factory {
 	if factory == nil {

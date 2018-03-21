@@ -1,8 +1,8 @@
 package app
 
 import (
-	"net/http"
 	"fmt"
+	"net/http"
 )
 
 type ErrorCode int
@@ -32,7 +32,7 @@ func PredefineError(errCode ErrorCode, status int, errText string) {
 	predefinedErrors[errCode] = &serverError{errCode, status, errText}
 }
 
-func GetError(errCode ErrorCode) *serverError{
+func GetError(errCode ErrorCode) *serverError {
 	return predefinedErrors[errCode]
 }
 
