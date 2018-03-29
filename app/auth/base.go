@@ -3,6 +3,7 @@ package auth
 import (
 	"errors"
 	"net/http"
+	"net/url"
 
 	"github.com/smbody/common-server/app"
 )
@@ -21,8 +22,8 @@ func Instance() *auth {
 	return instance
 }
 
-func (auth *auth) GetUID(token string) (string, error) {
-	uid, err := auth.validate_token(token)
+func (auth *auth) GetUID(appId string, token string) (string, error) {
+	uid, err := auth.validate_token(appId, token)
 	if err != nil {
 		return "", err
 	}
@@ -30,13 +31,23 @@ func (auth *auth) GetUID(token string) (string, error) {
 	return uid, nil
 }
 
-func (auth *auth) validate_token(token string) (string, error) {
+func appUrl(urlPath string, appId string) string {
+	u, _ := url.Parse(urlPath)
+	q := u.Query()
+	q.Add("appId", appId)
+	u.RawQuery = q.Encode()
+
+	return u.String()
+}
+
+func (auth *auth) validate_token(appId string, token string) (string, error) {
 	// спросим у периметра
-	req, err := http.NewRequest(http.MethodGet, auth.auth_url, nil)
+	req, err := http.NewRequest(http.MethodGet, appUrl(auth.auth_url, appId), nil)
 	if err != nil {
 		return "", err
 	}
 
+	req.URL.Query().Add("appId", appId)
 	req.Header.Add("Authorization", "Bearer "+token)
 
 	client := &http.Client{}

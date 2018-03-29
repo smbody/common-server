@@ -6,7 +6,7 @@ import (
 )
 
 type Auth interface {
-	GetUID(token string) (string, error)
+	GetUID(app string, token string) (string, error)
 }
 
 // unexported key type prevents collisions

@@ -9,12 +9,15 @@ import (
 func (app *application) authenticator(next http.Handler) http.Handler {
 	fn := func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
+		// получить application id
+		appId := r.URL.Query().Get("appId")
+
 		// получить токен из заголовка
 		// Authorization: Bearer
 		header := strings.Split(r.Header.Get("Authorization"), " ")
 
 		if len(header) == 2 {
-			uid, err := app.auth.GetUID(header[1])
+			uid, err := app.auth.GetUID(appId, header[1])
 			if err != nil {
 				fmt.Println("Error", err.Error())
 				// если не удалось - вернуть 401
