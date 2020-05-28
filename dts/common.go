@@ -7,10 +7,12 @@ import (
 	"io"
 )
 
+//Преобразование любой структуры в набор байтов.
 func Write(v interface{}) []byte {
 	return app.Write(v)
 }
 
+//Десереализация 
 func ToUser(reader io.Reader) (man bl.User) {
 	man = container.User()
 	app.Read(reader, man)

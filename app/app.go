@@ -2,9 +2,10 @@ package app
 
 import (
 	"fmt"
-	"github.com/justinas/alice"
 	"log"
 	"net/http"
+
+	"github.com/justinas/alice"
 )
 
 var App *application
@@ -28,7 +29,7 @@ func Init(auth Auth, routes Routes) *application {
 	result.defaultHandler = alice.New(
 		result.logging,
 		result.methodAllowed,
-		result.authenticator,
+		//result.authenticator,
 	).Then(result.executor())
 
 	return result
